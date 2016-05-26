@@ -15,8 +15,25 @@ session_start();
 		<div class="container">
 			<?php include("header.php");
 
-			if (isset($_SESSION['username'])) { 
-				echo $_SESSION['username'];
+			if (isset($_SESSION)) { 
+			?>
+			<div class="well well-sm">
+				<h5 class="text-center">Logged in as <b><?php echo $_SESSION['username']; ?></b> at <?php echo $_SESSION['loginTime']; ?></h5>
+			</div>
+			<?php 			
+			}
+			if (isset($_GET['errors'])){
+				$errors = unserialize($_GET['errors']);
+				
+			?>
+				<div class="alert alert-warning" role="alert">
+					<?php foreach ($errors as $error) {
+						echo $error;
+					}
+					?>
+				</div>
+				<?php
+				
 			}
 			?>
 

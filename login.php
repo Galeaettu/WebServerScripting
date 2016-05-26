@@ -22,7 +22,7 @@ session_start();
 			</div>
 			<div class="row">
 				<div class="col-md-5 col-md-offset-4">
-					<form  class="form-horizontal" action="loginProcess.php" method="POST">
+					<form  class="form-horizontal" action="login.php" method="POST">
 						<div class="form-group">
 							<div class="col-sm-12">
 								<div class="input-group col-sm-6 col-sm-offset-2">
@@ -30,7 +30,7 @@ session_start();
 										<span class="glyphicon glyphicon-user" aria-hidden="true">
 										</span>
 									</span>
-									<input type="email" class="form-control" id="username" name="username" placeholder="E-Mail Address">
+									<input type="text" class="form-control" id="username" name="username" placeholder="E-Mail Address">
 								</div>
 							</div>
 							<div class="col-sm-5 messages"></div>
@@ -56,28 +56,59 @@ session_start();
 						</div>
 					</form>
 				</div>
-			</div>
+				<?php
+					if (isset($_POST['login'])) {
+					$username = $_POST['username'];
+					$password = $_POST['password'];
+					
+					$errors = array();
+					
+					if (empty($username)) {
+						$errors[] = "Username required";
+					}
+					// else if (!filter_var($username, FILTER_VALIDATE_EMAIL)) {
+					// 	$errors[] = "Invalid email address";
+					// }
+					
+					if (empty($password)) {
+						$errors[] = "Please enter a password";
+					}
 
-			<?php
-			if (!isset($_SESSION['username'])) {
-			?>
-			<form action="loginProcess.php" method="post">
-				Email: <input type="email" name="email" />
-				<br/><br/>
-				Password: <input type="password" name="password" />
-				<br/><br/>
-				<input type="submit" name="submit_btn" value="Login" />
-			</form>
-			<?php 
-			} else {
-				echo "Welcome! You are logged in as ".$_SESSION['username'];
-				echo "<hr/>";
+					if(count($errors) == 0){
+						$query = "SELECT * FROM tbl_users WHERE username='$username'";
+						$result = mysqli_query($link, $query) or die(mysqli_error($link));
+
+						if (mysqli_num_rows($result) == 1) {
+							$data = mysqli_fetch_array($result);
+							$password_hash_in_db = $data['password'];
+							
+							if (password_verify($password, $password_hash_in_db)) {
+								$_SESSION['username'] = $username;
+								$_SESSION['loginTime'] = date("F j, Y, g:i a");   
+								header("Location: index.php");
+							}
+							//the email provided is correct however the password provided is incorrect
+							else {
+								$errors[] = "Username and/or password incorrect";
+							
+								$serialized_errors = serialize($errors);
+								header("Location: index.php?errors=$serialized_errors");
+							}
+						}
+						else {
+							$errors[] = "Username and/or password incorrect";
+							
+							$serialized_errors = serialize($errors);
+							header("Location: index.php?errors=$serialized_errors");
+						}
+					}
+					else {
+						$serialized_errors = serialize($errors);
+						header("Location: index.php?errors=$serialized_errors");
+					}
+				}
 				?>
-				<a href="logout.php"><button>Logout</button></a>
-			<?php
-			}  
-			?>
-
+			</div>
 			<?php include("footer.php"); ?>
 		</div>	
 	</body>
