@@ -27,7 +27,7 @@ session_start();
 			?>
 				<div class="alert alert-warning" role="alert">
 					<?php foreach ($errors as $error) {
-						echo $error;
+						echo "<p class='text-center'>".$error."</p>";
 					}
 					?>
 				</div>
@@ -35,28 +35,35 @@ session_start();
 				
 			}
 			?>
-			<div class="jumbotron">
-				<div class="container">
-					<div class="row">
-						<div class="col-sm-9">
-							<h1>Edit Personal Details</h1>
-						</div>
-						<div class="col-sm-3">
-							<img src="images/users/galeaettu.jpg" class="img-responsive img-circle" alt="Responsive image">
-						</div>
-					</div>
-					
-					
-				</div>
-			</div>
-			<?php 
-			if(!empty($errors)){
+			<?php 			
+			if (isset($_GET['messages'])){
+				$messages = unserialize($_GET['messages']);
+				
 			?>
-			<div class="alert alert-warning" role="alert"><?php echo $errors[0];?></div>
-			<?php
+				<div class="alert alert-success" role="alert">
+					<?php foreach ($messages as $msg) {
+						echo "<p class='text-center'>".$msg."</p>";
+					}
+					?>
+				</div>
+				<?php
+				
 			}
-
 			if(!empty($_SESSION)){
+		    	$username = $_SESSION['username'];
+		    	$query= "SELECT * FROM tbl_users WHERE username = '$username'";
+		    	$result = mysqli_query($link, $query) or die(mysqli_error($link));
+
+		    	if (mysqli_num_rows($result) == 1) {
+		    		$data = mysqli_fetch_array($result);
+		    		$image = $data['image'];
+		    		if(empty($image)){
+		    			$image = "images/users/blank.jpg";
+		    		}
+
+			    }
+		    }
+		    if(!empty($_SESSION)){
 		    	$username = $_SESSION['username'];
 		    	$query= "SELECT * FROM tbl_users WHERE username = '$username'";
 		    	$result = mysqli_query($link, $query) or die(mysqli_error($link));
@@ -70,12 +77,29 @@ session_start();
 		    		$lastname = $data['last_name'];
 		    		$dob = $data['dob'];
 		    		$country = $data['country'];
-		    		$image = $data['image'];
 			    }
 		    }
 			?>
+
+			<div class="jumbotron">
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-9">
+							<h1>Edit Personal Details</h1>
+							<div class="row">
+								<div class="col-sm-5">
+									<h2><?php echo $firstname." ".$lastname;?></h2>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-3">
+							<img width="200px" height="200px" src="<?php echo $image;?>" class="img-responsive img-circle" alt="Responsive image">
+						</div>
+					</div>
+				</div>
+			</div>
 			<div>
-				<form id="reg_form" class="form-horizontal" action="registrationProcess.php" method="POST" >
+				<form enctype="multipart/form-data" id="reg_form" class="form-horizontal" action="updateDetailsProcess.php" method="POST" >
 					<div class="form-group">
 						<label for="firstname" class="col-sm-2 control-label" >First Name:</label>
 						<div class="col-sm-5">
@@ -142,8 +166,14 @@ session_start();
 						</div>
 					</div>
 					<div class="form-group">
+						<label for="country" class="col-sm-2 control-label">Profile Picture:</label>
+						<div class="col-sm-10">
+							<input type="file" class="btn btn-default" id="image" name="image"/>
+						</div>
+					</div>
+					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
-							<button type="submit" class="btn btn-default" id="register" name="register">Update details.</button>
+							<button type="submit" class="btn btn-default" id="update" name="update">Update details.</button>
 						</div>
 					</div>
 				</form>
