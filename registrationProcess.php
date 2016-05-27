@@ -28,6 +28,7 @@ if(isset($_POST['register'])){
 		VALUES('$email', '$password', '$role', '$firstname', '$lastname', '$dob', $country, '')";
 
 		$_SESSION['username'] = $email;
+		$_SESSION['loginTime'] = date("F j, Y, g:i a");  
 		header("Location: index.php");
 		mysqli_query($link, $insertQuery) or die(mysqli_error($link));
 	}
