@@ -15,13 +15,22 @@ session_start();
 		<div class="container">
 			<?php include("header.php");
 
-			if (isset($_SESSION)) { 
 			?>
 			<div class="well well-sm">
+				<?php
+				if (!empty($_SESSION)) { 
+				?>
 				<h5 class="text-center">Logged in as <b><?php echo $_SESSION['username']; ?></b> at <?php echo $_SESSION['loginTime']; ?></h5>
+				<?php 
+				}
+				else{
+				?>
+					<h5 class="text-center">Welcome Guest</h5>
+				<?php
+				}
+				?>
 			</div>
 			<?php 			
-			}
 			if (isset($_GET['errors'])){
 				$errors = unserialize($_GET['errors']);
 				

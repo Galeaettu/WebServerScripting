@@ -18,6 +18,7 @@ session_start();
 			<div class="jumbotron">
 				<div class="container">
 					<h1>Log In</h1>
+					<p>New customer? <a class="btn btn-primary btn-lg" href="registration.php" role="button">Register Now!</a></p>
 				</div>
 			</div>
 			<div class="row">
