@@ -16,6 +16,7 @@ session_start();
 			<?php include("header.php");
 
 			?>
+
 			<?php 			
 			if (isset($_GET['errors'])){
 				$errors = unserialize($_GET['errors']);
@@ -24,6 +25,19 @@ session_start();
 				<div class="alert alert-warning" role="alert">
 					<?php foreach ($errors as $error) {
 						echo "<p class='text-center'>".$error."<p>";
+					}
+					?>
+				</div>
+				<?php
+				
+			}
+			if (isset($_GET['messages'])){
+				$messages = unserialize($_GET['messages']);
+				
+			?>
+				<div class="alert alert-success" role="alert">
+					<?php foreach ($messages as $msg) {
+						echo "<p class='text-center'>".$msg."<p>";
 					}
 					?>
 				</div>

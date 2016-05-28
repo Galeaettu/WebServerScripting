@@ -23,7 +23,7 @@ session_start();
 			?>
 				<div class="alert alert-warning" role="alert">
 					<?php foreach ($errors as $error) {
-						echo "<p class='text-center'>".$error."<p>";
+						echo "<p class='text-center'>".$error."</p>";
 					}
 					?>
 				</div>
