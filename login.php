@@ -31,7 +31,7 @@ session_start();
 										<span class="glyphicon glyphicon-user" aria-hidden="true">
 										</span>
 									</span>
-									<input type="text" class="form-control" id="username" name="username" placeholder="E-Mail Address">
+									<input type="text" class="form-control" id="username" name="username" placeholder="E-Mail Address" autofocus>
 								</div>
 							</div>
 							<div class="col-sm-5 messages"></div>
