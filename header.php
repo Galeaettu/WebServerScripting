@@ -27,6 +27,7 @@ include("connection.php");
 	    	<ul class="nav navbar-nav">
 	    		<li><a href = "products.php">Products</a></li>
 	    		<?php
+	    		//menu for logged in customers
 			    if(!empty($_SESSION)){
 			    	$username = $_SESSION['username'];
 			    	$query= "SELECT role FROM tbl_users WHERE username = '$username'";
@@ -53,6 +54,7 @@ include("connection.php");
 	    		
 	    		<li><a href = "#">Contact Us</a></li>
 	    		<?php
+	    		//menu for logged in admins
 			    if(!empty($_SESSION)){
 			    	$username = $_SESSION['username'];
 			    	$query= "SELECT role FROM tbl_users WHERE username = '$username'";
@@ -94,11 +96,13 @@ include("connection.php");
 <div class="well well-sm">
 	<?php
 	if (!empty($_SESSION)) { 
+		//displays the time at which the user logged in if there is one logged in
 	?>
 	<h5 class="text-center">Logged in as <b><?php echo $_SESSION['username']; ?></b> at <?php echo $_SESSION['loginTime']; ?></h5>
 	<?php 
 	}
 	else{
+		//welcomes the user if he is not logged in
 	?>
 		<h5 class="text-center">Welcome Guest</h5>
 	<?php

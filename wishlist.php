@@ -8,7 +8,7 @@ if(isset($_GET['id'])){
 	$errors = array();
 	require("connection.php");
 
-	$query = "INSERT INTO tbl_wishlist(username, product) VALUES ('$username', $productId)";
+	$query = "INSERT INTO tbl_wishlist(username, product) VALUES ('$username', $productId)"; //add the product id and user id to the wishlist
 	$result = mysqli_query($link, $query) 
 	or die(mysqli_error($link)) 
 	;

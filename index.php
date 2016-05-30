@@ -14,9 +14,10 @@ session_start();
 	</head>
 	<body>
 		<div class="container">
-			<?php include("header.php");
+			<?php include("header.php"); //includes the header file in the page
 
 			?>
+			<!-- if there are errors or messages in the link, passed from other pages, show them -->
 			<?php 			
 			if (isset($_GET['errors'])){
 				$errors = unserialize($_GET['errors']);
@@ -56,7 +57,7 @@ session_start();
 							$query = "SELECT * FROM tbl_products";
 							$result = mysqli_query($link, $query) or die(mysqli_error($link));
 							while ($userProduct = mysqli_fetch_array($result)){
-								$product = $userProduct['product'];
+								$product = $userProduct['product']; //sets the first product as active so the carousel can work
 								$prodId = $userProduct['id'];
 								if($prodId == 1){
 									$active = "active";
@@ -65,7 +66,7 @@ session_start();
 									$active = "";
 								}
 
-								if (!empty($_SESSION)){
+								if (!empty($_SESSION)){ //if there is no user logged in or logged in as admin the wishlist button will not work
 									if($_SESSION['role'] == "reg"){
 										$wishLink = "wishlist.php?id=$prodId";
 										$wishModal = "";
@@ -100,7 +101,7 @@ session_start();
 					<div id="myCarousel2" class="carousel slide" data-ride="carousel">
 					    <div class="carousel-inner" role="listbox">
 		    				<?php
-							$query = "SELECT * FROM tbl_products ORDER BY id DESC";
+							$query = "SELECT * FROM tbl_products ORDER BY id DESC"; //order the producs in descending orger so the images in the page look different
 							$result = mysqli_query($link, $query) or die(mysqli_error($link));
 							while ($userProduct = mysqli_fetch_array($result)){
 								$product = $userProduct['product'];
@@ -143,6 +144,7 @@ session_start();
 					    </div>
 					</div>
 				</div>
+				<!-- A modal for when a logged out user or admin clicks the "add to wishlist" button -->
 				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 				    <div class="modal-dialog modal-sm" role="document">
 				        <div class="modal-content">

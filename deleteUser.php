@@ -17,7 +17,8 @@ session_start();
 			<?php include("header.php");
 
 			?>
-			<?php 			
+			<?php 
+			//gets the errors or messages and displays them
 			if (isset($_GET['errors'])){
 				$errors = unserialize($_GET['errors']);
 				
@@ -35,9 +36,11 @@ session_start();
 				$deleteUsername = $_GET['id'];
 				$deleteUsername = mysqli_real_escape_string($link, $deleteUsername);
 
+				//deletes the user when the button is clicked
 				$queryDelete = "DELETE FROM tbl_users WHERE username = '$deleteUsername'";
 				mysqli_query($link, $queryDelete);
 
+				//checks if user was deleted
 				if (mysqli_affected_rows($link) == 1) {
 					header("Location:?user_deleted=yes");
 				}
@@ -50,6 +53,7 @@ session_start();
 				$deleteMessage = $_GET['user_deleted'];
 
 				if($deleteMessage == 'yes'){
+					//displays a message according to the 'user_deleted' GET variable
 				?>
 				<div class="alert alert-success" role="alert">
 					<p class="text-center">User deleted successfully!</p>
@@ -67,7 +71,9 @@ session_start();
 			if($_SESSION['role'] != "admin"){
 				$errors = array();
 				// var_dump($_SESSION['role']);
+				//This was used to show what the role of the user logged in was
 				$errors[] = "You must be logged in as admin to delete users.";
+				//passing serialized errors to be displayed in the index page
 				$serialized_errors = serialize($errors);
 				header("Location: index.php?errors=$serialized_errors");
 			}
@@ -99,6 +105,7 @@ session_start();
 			    		$lastname = $userRow['last_name'];
 			    		$dob = $userRow['dob'];
 
+			    		//gets the country name
 			    		$country = $userRow['country'];
 			    		$countryQuery = "SELECT country from tbl_country WHERE id = $country";
 			    		$resultCountry = mysqli_query($link, $countryQuery) or die(mysqli_error($link));

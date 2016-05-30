@@ -17,6 +17,7 @@ session_start();
 			<?php include("header.php");
 
 			?>
+			<!-- gets and displays errors -->
 			<?php 			
 			if (isset($_GET['errors'])){
 				$errors = unserialize($_GET['errors']);
@@ -52,6 +53,7 @@ session_start();
 		    		$countryRow = mysqli_fetch_array($resultCountry);
 		    		$country = $countryRow[0];
 
+		    		//sets a default image
 		    		$image = $data['image'];
 		    		if(empty($image)){
 		    			$image = "images/users/blank.jpg";

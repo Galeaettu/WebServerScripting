@@ -1,6 +1,7 @@
 <div class="empty-space">
 </div>
 <script>
+//checks the browser version
     $(document).ready(function(){
         if($.browser.chrome){
             $("#browser").html("Browser: Google Chrome "+$.browser.version);

@@ -68,15 +68,13 @@ session_start();
 					if (empty($username)) {
 						$errors[] = "Username required";
 					}
-					// else if (!filter_var($username, FILTER_VALIDATE_EMAIL)) {
-					// 	$errors[] = "Invalid email address";
-					// }
 					
 					if (empty($password)) {
 						$errors[] = "Please enter a password";
 					}
 
 					if(count($errors) == 0){
+						//continue if there are no errors
 						$query = "SELECT * FROM tbl_users WHERE username='$username'";
 						$result = mysqli_query($link, $query) or die(mysqli_error($link));
 						$queryRole= "SELECT role FROM tbl_users WHERE username = '$username'";
@@ -85,13 +83,18 @@ session_start();
 				    	if (mysqli_num_rows($resultRole) == 1) {
 				    		$data = mysqli_fetch_array($resultRole);
 				    		$role = $data['role'];
+				    		//gets the role
 				    	}
 
 						if (mysqli_num_rows($result) == 1) {
 							$data = mysqli_fetch_array($result);
 							$password_hash_in_db = $data['password'];
+							//gets the hashed password from the database
 							
 							if (password_verify($password, $password_hash_in_db)) {
+								//checks the hashed password in the database with the one given by the user using a function
+
+								//sets the variables in the session, username, login time abd role
 								$_SESSION['username'] = $username;
 								$_SESSION['loginTime'] = date("F j, Y, g:i a"); 
 								$_SESSION['role'] = $role;
@@ -116,6 +119,7 @@ session_start();
 						}
 					}
 					else {
+						//passes any errors to the index page
 						$serialized_errors = serialize($errors);
 						header("Location: index.php?errors=$serialized_errors");
 					}

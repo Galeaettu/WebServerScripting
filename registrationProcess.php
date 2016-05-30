@@ -3,6 +3,7 @@ session_start();
 include("connection.php");
 
 if(isset($_POST['register'])){
+	//if the button is clicked the data is fetched
 	$email = $_POST['username'];
 	$password = $_POST['password'];
 	$firstname = $_POST['firstname'];
@@ -30,7 +31,7 @@ if(isset($_POST['register'])){
 		header("Location: registration.php?errors=$serialized_errors");
 	}
 	else{
-		$password = password_hash($password, PASSWORD_DEFAULT);
+		$password = password_hash($password, PASSWORD_DEFAULT); //hashes the password
 
 		$insertQuery = "INSERT INTO tbl_users (username, password, role, first_name, last_name, dob, country, image) 
 		VALUES('$email', '$password', '$role', '$firstname', '$lastname', '$dob', $country, '')";
@@ -39,7 +40,7 @@ if(isset($_POST['register'])){
 		$_SESSION['loginTime'] = date("F j, Y, g:i a"); 
 		$_SESSION['role'] = $role;  
 		header("Location: index.php");
-		mysqli_query($link, $insertQuery) or die(mysqli_error($link));
+		mysqli_query($link, $insertQuery) or die(mysqli_error($link)); //executes the query
 	}
 }
 ?>

@@ -20,7 +20,7 @@ session_start();
 			<?php include("header.php");
 
 			?>
-			
+			<!-- Gets any errors or messages -->
 			<?php 			
 			if (isset($_GET['errors'])){
 				$errors = unserialize($_GET['errors']);
@@ -66,13 +66,14 @@ session_start();
 		    		$dob = $data['dob'];
 		    		$country = $data['country'];
 
-		    		$image = $data['image'];
+		    		$image = $data['image']; //gives a default image if no image path is in the database
 		    		if(empty($image)){
 		    			$image = "images/users/blank.jpg";
 		    		}
 			    }
 		    }
 		    else{
+		    	//redirects the user if he is not supposed to view the content
 		    	$errors[] = "You must be logged in as a customer to edit your personal details.";
 				$serialized_errors = serialize($errors);
 				header("Location: index.php?errors=$serialized_errors");
@@ -152,6 +153,7 @@ session_start();
 								$result = mysqli_query($link, $query) or die(mysqli_error($link));
 								while ($rowCountry = mysqli_fetch_array($result)){
 									if ($rowCountry['id'] == $country){
+										//gets the country of the user and sets it as selected
 										$selected = "selected";
 									}
 									else{
