@@ -31,6 +31,17 @@ session_start();
 				<?php
 				
 			}
+			if (isset($_GET['messages'])){
+				$messages = unserialize($_GET['messages']);
+				?>
+				<div class="alert alert-success" role="alert">
+					<?php foreach ($messages as $msg) {
+						echo "<p class='text-center'>".$msg."</p>";
+					}
+					?>
+				</div>
+			<?php
+			}
 			?>
 			<div class="jumbotron">
 				<div class="container">
@@ -39,7 +50,7 @@ session_start();
 			</div>
 			<div class="row">
 				<div class="col-sm-6">
-					<div id="myCarousel" class="carousel slide" data-ride="carousel">
+					<div id="myCarousel1" class="carousel slide" data-ride="carousel">
 					    <div class="carousel-inner" role="listbox">
 		    				<?php
 							$query = "SELECT * FROM tbl_products";
@@ -58,6 +69,9 @@ session_start();
 									if($_SESSION['role'] == "reg"){
 										$wishLink = "wishlist.php?id=$prodId";
 										$wishModal = "";
+									}else{
+										$wishLink ="#";
+										$wishModal = "data-toggle='modal' data-target='#myModal'";
 									}
 								}
 								else{
@@ -83,7 +97,7 @@ session_start();
 					</div>
 				</div>
 				<div class="col-sm-6">
-					<div id="myCarousel" class="carousel slide" data-ride="carousel">
+					<div id="myCarousel2" class="carousel slide" data-ride="carousel">
 					    <div class="carousel-inner" role="listbox">
 		    				<?php
 							$query = "SELECT * FROM tbl_products ORDER BY id DESC";
@@ -102,6 +116,9 @@ session_start();
 									if($_SESSION['role'] == "reg"){
 										$wishLink = "wishlist.php?id=$prodId";
 										$wishModal = "";
+									}else{
+										$wishLink ="#";
+										$wishModal = "data-toggle='modal' data-target='#myModal'";
 									}
 								}
 								else{

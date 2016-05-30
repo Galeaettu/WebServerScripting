@@ -51,7 +51,7 @@ include("connection.php");
 			    }
 			    ?>
 	    		
-	    		<li><a href = "contactUs.php">Contact Us</a></li>
+	    		<li><a href = "#">Contact Us</a></li>
 	    		<?php
 			    if(!empty($_SESSION)){
 			    	$username = $_SESSION['username'];
@@ -67,9 +67,9 @@ include("connection.php");
 				    			<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
 				    			<ul class="dropdown-menu">
 				    				<li><a href="deleteUser.php">Delete users</a></li>
-				    				<li><a href="errorLog.php">Error log</a></li>
-				    				<li><a href="statistics.php">Statistics</a></li>
-				    				<li><a href="comments.php">Comments</a></li>
+				    				<li><a href="#">Error log</a></li>
+				    				<li><a href="#">Statistics</a></li>
+				    				<li><a href="#">Comments</a></li>
 				    			</ul>
 				    		</li>
 				    	<?php

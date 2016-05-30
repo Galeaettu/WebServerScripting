@@ -94,8 +94,11 @@ session_start();
 							if (password_verify($password, $password_hash_in_db)) {
 								$_SESSION['username'] = $username;
 								$_SESSION['loginTime'] = date("F j, Y, g:i a"); 
-								$_SESSION['role'] = $role; 
-								header("Location: index.php");
+								$_SESSION['role'] = $role;
+								$messages = array();
+								$messages[] = "You have successfully logged in!";
+								$serialized_messages = serialize($messages);
+								header("Location: index.php?messages=$serialized_messages");
 							}
 							//the email provided is correct however the password provided is incorrect
 							else {

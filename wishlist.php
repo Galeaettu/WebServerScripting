@@ -9,7 +9,9 @@ if(isset($_GET['id'])){
 	require("connection.php");
 
 	$query = "INSERT INTO tbl_wishlist(username, product) VALUES ('$username', $productId)";
-	$result = mysqli_query($link, $query) ;
+	$result = mysqli_query($link, $query) 
+	or die(mysqli_error($link)) 
+	;
 	if (mysqli_affected_rows($link) == 1)  {
 		$messages[] = "Product has been added to the wishlist!";
 		$serialized_messages = serialize($messages);
@@ -61,7 +63,7 @@ if(isset($_GET['id'])){
 			</div>
 			<div>
 				<?php
-				if(!empty($_SESSION))
+				if(!empty($_SESSION) && ($_SESSION['role'] == "reg"))
 				{
 					$username = $_SESSION['username'];
 				?>
@@ -79,10 +81,11 @@ if(isset($_GET['id'])){
 						$product = $productRow['productName'];
 					?>
 					<tr>
-						<td><img width="60px" src="images/products/<?php echo $productRow['prodID'];?>.jpg" class="img-thumbnail"></td>
+						<td><img width="60" alt = "wishlist image" src="images/products/<?php echo $productRow['prodID'];?>.jpg" class="img-thumbnail"></td>
 						<td><h3><?php echo $product;?></h3></td>
 						<td></td>
 					</tr>
+					
 					<?php
 					}
 					?>
@@ -90,7 +93,7 @@ if(isset($_GET['id'])){
 				<?php
 				}
 				else{
-					$errors[] = "You must be logged in to access the wishlist.";
+					$errors[] = "You must be logged in as a customer to access the wishlist.";
 					$serialized_errors = serialize($errors);
 					header("Location: index.php?errors=$serialized_errors");
 				}

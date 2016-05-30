@@ -50,21 +50,8 @@ session_start();
 				<?php
 				
 			}
-			if(!empty($_SESSION)){
-		    	$username = $_SESSION['username'];
-		    	$query= "SELECT * FROM tbl_users WHERE username = '$username'";
-		    	$result = mysqli_query($link, $query) or die(mysqli_error($link));
 
-		    	if (mysqli_num_rows($result) == 1) {
-		    		$data = mysqli_fetch_array($result);
-		    		$image = $data['image'];
-		    		if(empty($image)){
-		    			$image = "images/users/blank.jpg";
-		    		}
-
-			    }
-		    }
-		    if(!empty($_SESSION)){
+		    if(!empty($_SESSION) && ($_SESSION['role'] == "reg")){
 		    	$username = $_SESSION['username'];
 		    	$query= "SELECT * FROM tbl_users WHERE username = '$username'";
 		    	$result = mysqli_query($link, $query) or die(mysqli_error($link));
@@ -78,7 +65,17 @@ session_start();
 		    		$lastname = $data['last_name'];
 		    		$dob = $data['dob'];
 		    		$country = $data['country'];
+
+		    		$image = $data['image'];
+		    		if(empty($image)){
+		    			$image = "images/users/blank.jpg";
+		    		}
 			    }
+		    }
+		    else{
+		    	$errors[] = "You must be logged in as a customer to edit your personal details.";
+				$serialized_errors = serialize($errors);
+				header("Location: index.php?errors=$serialized_errors");
 		    }
 			?>
 
@@ -94,7 +91,7 @@ session_start();
 							</div>
 						</div>
 						<div class="col-sm-3">
-							<img width="200px" height="200px" src="<?php echo $image;?>" class="img-responsive img-circle" alt="Responsive image">
+							<img width="200" height="200" src="<?php echo $image;?>" class="img-responsive img-circle" alt="Responsive image">
 						</div>
 					</div>
 				</div>
@@ -142,7 +139,7 @@ session_start();
 					<div class="form-group">
 						<label for="dob" class="col-sm-2 control-label">Date of Birth:</label>
 						<div class="col-sm-5">
-							<input type="date" class="form-control" id="dob" name="dob" placeholder="YYYY-MM-DD" value="<?php echo $dob ?>">
+							<input type="date" class="form-control" id="dob" name="dob" value="<?php echo $dob ?>">
 						</div>
 						<div class="col-sm-5 messages"></div>
 					</div>

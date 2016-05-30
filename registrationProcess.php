@@ -15,6 +15,14 @@ if(isset($_POST['register'])){
 
 	$query = "SELECT * FROM tbl_users WHERE username = '$email'";
 	$result = mysqli_query($link, $query) or die(mysqli_error($link));
+	$queryRole= "SELECT role FROM tbl_users WHERE username = '$username'";
+	$resultRole = mysqli_query($link, $queryRole) or die(mysqli_error($link));
+
+	if (mysqli_num_rows($resultRole) == 1) {
+		$data = mysqli_fetch_array($resultRole);
+		$role = $data['role'];
+	}
+
 
 	if (mysqli_num_rows($result) == 1) {
 		$errors[] = "Username already registered.";
@@ -28,7 +36,8 @@ if(isset($_POST['register'])){
 		VALUES('$email', '$password', '$role', '$firstname', '$lastname', '$dob', $country, '')";
 
 		$_SESSION['username'] = $email;
-		$_SESSION['loginTime'] = date("F j, Y, g:i a");  
+		$_SESSION['loginTime'] = date("F j, Y, g:i a"); 
+		$_SESSION['role'] = $role;  
 		header("Location: index.php");
 		mysqli_query($link, $insertQuery) or die(mysqli_error($link));
 	}

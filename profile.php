@@ -32,7 +32,7 @@ session_start();
 				
 			}
 
-			if(!empty($_SESSION)){
+			if(!empty($_SESSION) && ($_SESSION['role'] == "reg")){
 				$username = $_SESSION['username'];
 				$query= "SELECT * FROM tbl_users WHERE username = '$username'";
 		    	$result = mysqli_query($link, $query) or die(mysqli_error($link));
@@ -53,11 +53,14 @@ session_start();
 		    		$country = $countryRow[0];
 
 		    		$image = $data['image'];
+		    		if(empty($image)){
+		    			$image = "images/users/blank.jpg";
+		    		}
 			    }
 			}
 			else
 			{
-				$errors[] = "You must be logged in to access your profile.";
+				$errors[] = "You must be logged in as a customer to access your profile.";
 				$serialized_errors = serialize($errors);
 				header("Location: index.php?errors=$serialized_errors");
 			}

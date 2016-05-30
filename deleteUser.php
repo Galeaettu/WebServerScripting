@@ -64,6 +64,13 @@ session_start();
 				<?php
 				}
 			}
+			if($_SESSION['role'] != "admin"){
+				$errors = array();
+				// var_dump($_SESSION['role']);
+				$errors[] = "You must be logged in as admin to delete users.";
+				$serialized_errors = serialize($errors);
+				header("Location: index.php?errors=$serialized_errors");
+			}
 			?>
 
 			<div class="jumbotron">
