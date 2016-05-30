@@ -6,6 +6,7 @@ session_start();
 	<head>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+		<script src="https://code.jquery.com/jquery-migrate-1.3.0.min.js"></script>
 		<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"> -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" href="css/style.css">
@@ -78,6 +79,13 @@ session_start();
 					if(count($errors) == 0){
 						$query = "SELECT * FROM tbl_users WHERE username='$username'";
 						$result = mysqli_query($link, $query) or die(mysqli_error($link));
+						$queryRole= "SELECT role FROM tbl_users WHERE username = '$username'";
+				    	$resultRole = mysqli_query($link, $queryRole) or die(mysqli_error($link));
+
+				    	if (mysqli_num_rows($resultRole) == 1) {
+				    		$data = mysqli_fetch_array($resultRole);
+				    		$role = $data['role'];
+				    	}
 
 						if (mysqli_num_rows($result) == 1) {
 							$data = mysqli_fetch_array($result);
@@ -85,7 +93,8 @@ session_start();
 							
 							if (password_verify($password, $password_hash_in_db)) {
 								$_SESSION['username'] = $username;
-								$_SESSION['loginTime'] = date("F j, Y, g:i a");   
+								$_SESSION['loginTime'] = date("F j, Y, g:i a"); 
+								$_SESSION['role'] = $role; 
 								header("Location: index.php");
 							}
 							//the email provided is correct however the password provided is incorrect

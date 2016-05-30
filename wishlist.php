@@ -10,7 +10,7 @@ if(isset($_GET['id'])){
 
 	$query = "INSERT INTO tbl_wishlist(username, product) VALUES ('$username', $productId)";
 	$result = mysqli_query($link, $query) ;
-	if (mysqli_affected_rows($link) == 1) {
+	if (mysqli_affected_rows($link) == 1)  {
 		$messages[] = "Product has been added to the wishlist!";
 		$serialized_messages = serialize($messages);
 		header("Location: products.php?messages=$serialized_messages");
@@ -28,6 +28,7 @@ if(isset($_GET['id'])){
 	<head>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+		<script src="https://code.jquery.com/jquery-migrate-1.3.0.min.js"></script>
 		<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"> -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" href="css/style.css">

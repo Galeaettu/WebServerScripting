@@ -1,6 +1,20 @@
 <div class="empty-space">
 </div>
+<script>
+    $(document).ready(function(){
+        if($.browser.chrome){
+            $("#browser").html("Browser: Google Chrome "+$.browser.version);
+        }
+        else if($.browser.msie){
+            $("#browser").html("Browser: Internet Explorer "+$.browser.version);
+        }
+        else if($.browser.mozilla){
+            $("#browser").html("Browser: Firefox "+$.browser.version);
+        }
 
+        console.log($.browser);
+    });
+</script>
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="container">
         <div class="navbar-header">
@@ -22,5 +36,5 @@
 	var screenSize = "Screen Resolution: " + screen.width + "*" + screen.height;
 	var browserSize = "Browser Resolution: " +window.innerWidth + "*" + window.innerHeight;
 	document.getElementById("screen").innerHTML = screenSize;
-	document.getElementById("browser").innerHTML = browserSize;
+	// document.getElementById("browser").innerHTML = browserSize;
 </script>

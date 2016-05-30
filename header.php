@@ -1,4 +1,6 @@
-<?php include("connection.php"); ?>
+<?php 
+include("connection.php"); 
+?>
 <div class="page-header">
 	<h1>Moth <small>Clothing for the masses</small></h1>
 </div>
@@ -28,7 +30,7 @@
 			    if(!empty($_SESSION)){
 			    	$username = $_SESSION['username'];
 			    	$query= "SELECT role FROM tbl_users WHERE username = '$username'";
-			    	$result = mysqli_query($link, $query) or die(mysqli_error($link));#
+			    	$result = mysqli_query($link, $query) or die(mysqli_error($link));
 
 			    	if (mysqli_num_rows($result) == 1) {
 			    		$data = mysqli_fetch_array($result);
@@ -39,6 +41,7 @@
 				    			<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Personal Profile <span class="caret"></span></a>
 				    			<ul class="dropdown-menu">
 				    				<li><a href="wishlist.php">Products added to list</a></li>
+				    				<li><a href="profile.php">View profile</a></li>
 				    				<li><a href="personalDetails.php">Edit personal details</a></li>
 				    			</ul>
 				    		</li>
