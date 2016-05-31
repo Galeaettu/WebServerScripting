@@ -10,7 +10,8 @@ if(isset($_GET['id'])){
 
 	$query = "INSERT INTO tbl_wishlist(username, product) VALUES ('$username', $productId)"; //add the product id and user id to the wishlist
 	$result = mysqli_query($link, $query) 
-	or die(mysqli_error($link)) 
+	//or die(mysqli_error($link))
+	//used to check if duplicate wishlist items are allowed to be added
 	;
 	if (mysqli_affected_rows($link) == 1)  {
 		$messages[] = "Product has been added to the wishlist!";
@@ -74,7 +75,7 @@ if(isset($_GET['id'])){
 						<th></th>
 					</tr>
 					<?php
-					$query = "SELECT tbl_products.product AS productName, tbl_products.id AS prodID FROM tbl_products INNER JOIN tbl_wishlist ON tbl_products.id = tbl_wishlist.id WHERE tbl_wishlist.username = '$username'";
+					$query = "SELECT tbl_products.product AS productName, tbl_products.id AS prodID FROM tbl_products INNER JOIN tbl_wishlist ON tbl_products.id = tbl_wishlist.product WHERE tbl_wishlist.username = '$username'";
 					$result = mysqli_query($link, $query) or die(mysqli_error($link));
 
 					while ($productRow = mysqli_fetch_array($result)){
